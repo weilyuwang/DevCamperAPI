@@ -106,7 +106,7 @@ Create the backend for a bootcamp directory website. The frontend/UI will be cre
 ## Deployment (Digital Ocean)
 
 - Push to Github
-- Create a droplet - https://m.do.co/c/5424d440c63a
+- Create a droplet - https://www.digitalocean.com/
 - Clone repo on to server
 - Use PM2 process manager
 - Enable firewall (ufw) and open needed ports
