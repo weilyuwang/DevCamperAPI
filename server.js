@@ -31,6 +31,7 @@ if (process.env.NODE_ENV === "development") {
 app.use("/api/v1/bootcamps", bootcampsRouter);
 app.use("/api/v1/courses", coursesRouter);
 
+// Use errorHandler middleware
 app.use(errorHandler);
 
 const PORT = process.env.PORT || 5000;

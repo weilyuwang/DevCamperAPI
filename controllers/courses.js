@@ -49,6 +49,29 @@ exports.getCourse = asyncHandler(async (req, res, next) => {
   });
 });
 
+// Below is the original controller function without using async handler
+const getCourse_without_asyncHandler = async (req, res, next) => {
+  try {
+    const course = await Course.findById(req.params.id).populate({
+      path: "bootcamp",
+      select: "name description",
+    });
+
+    if (!course) {
+      next(new ErrorResponse(`No course with the id of ${req.params.id}`), 404);
+
+      return;
+    }
+
+    res.status(200).json({
+      success: true,
+      data: course,
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
 // @desc      Add a course
 // @route     POST /api/v1/bootcamps/:bootcampId/courses
 // @access    Private
