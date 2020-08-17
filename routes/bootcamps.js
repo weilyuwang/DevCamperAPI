@@ -17,20 +17,22 @@ const courseRouter = require("./courses");
 
 const router = express.Router();
 
+const { protect } = require('../middleware/auth')
+
 // Re-route into other resource routers
 // Re-route /api/v1/bootcamps/:bootcampId/courses to /api/v1/courses with params merged
 router.use("/:bootcampId/courses", courseRouter);
 
 router.route("/radius/:zipcode/:distance").get(getBootcampsInRadius);
 
-router.route("/").get(advancedResults(Bootcamp, "courses"), getBootcamps).post(createBootcamp);
+router.route("/").get(advancedResults(Bootcamp, "courses"), getBootcamps).post(protect, createBootcamp);
 
-router.route("/:id/photo").put(bootcampPhotoUpload)
+router.route("/:id/photo").put(protect, bootcampPhotoUpload)
 
 router
   .route("/:id")
   .get(getBootcamp)
-  .put(updateBootcamp)
-  .delete(deleteBootcamp);
+  .put(protect, updateBootcamp)
+  .delete(protect, deleteBootcamp);
 
 module.exports = router;
