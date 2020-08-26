@@ -184,10 +184,6 @@ exports.updatePassword = asyncHandler(async (req, res, next) => {
 
 
 
-
-
-
-
 // @desc   Reusable helper function to get token from model, create cookie and send response
 const sendTokenResponse = (user, statusCode, res) => {
   // Create JWT 
@@ -204,9 +200,27 @@ const sendTokenResponse = (user, statusCode, res) => {
     options.secure = true
   }
 
+  // Add token to cookie - by cookie-parser
   res
     .status(statusCode)
     .cookie('token', token, options)
     .json({ success: true, token: token })
 
 }
+
+
+
+
+// @desc      Log user out / clear cookie
+// @route     GET /api/v1/auth/logout
+// @access    Private
+exports.logout = asyncHandler(async (req, res, next) => {
+
+  // Remove token from cookie - by cookie-parser
+  res
+    .clearCookie("token")
+    .status(200).json({
+      success: true,
+      data: {}
+    })
+})
