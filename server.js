@@ -4,7 +4,12 @@ const morgan = require("morgan");
 const colors = require("colors");
 const fileupload = require("express-fileupload")
 const cookieParser = require('cookie-parser')
+
+// Security
 const mongoSanitize = require('express-mongo-sanitize')
+const helmet = require('helmet')
+const xss = require('xss-clean')
+
 const errorHandler = require("./middleware/error");
 const connectDB = require("./config/db");
 const path = require('path')
@@ -43,6 +48,13 @@ app.use(fileupload())
 // Sanitize data (to prevent mongodb injection, etc.)
 // e.g. prevent something like { "email":  { "$gte": "" }, "password": "123456" }
 app.use(mongoSanitize())
+
+// Set security headers
+app.use(helmet())
+
+// Prevent XSS attacks
+/* make sure this comes before any routes */
+app.use(xss())
 
 // Set static folder
 // __dirname: current dir
