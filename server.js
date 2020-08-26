@@ -1,7 +1,14 @@
 const express = require("express");
 const dotenv = require("dotenv");
+const path = require('path')
+
+// Logging
 const morgan = require("morgan");
+
+// Colorful console output
 const colors = require("colors");
+
+// Utils
 const fileupload = require("express-fileupload")
 const cookieParser = require('cookie-parser')
 
@@ -9,10 +16,16 @@ const cookieParser = require('cookie-parser')
 const mongoSanitize = require('express-mongo-sanitize')
 const helmet = require('helmet')
 const xss = require('xss-clean')
+const hpp = require('hpp')
+const rateLimit = require('express-rate-limit')
+const cors = require('cors')
 
+// Error handling middleware
 const errorHandler = require("./middleware/error");
+
+// MongoDB Connection
 const connectDB = require("./config/db");
-const path = require('path')
+
 
 // Load env vars
 dotenv.config({
@@ -55,6 +68,19 @@ app.use(helmet())
 // Prevent XSS attacks
 /* make sure this comes before any routes */
 app.use(xss())
+
+// Rate limiting
+const limiter = rateLimit({
+  windowMs: 10 * 60 * 1000, // 10 min
+  max: 100
+})
+app.use(limiter)
+
+// Prevent http param pollution
+app.use(hpp())
+
+// Enable CORS
+app.use(cors())
 
 // Set static folder
 // __dirname: current dir
