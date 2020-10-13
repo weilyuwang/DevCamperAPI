@@ -50,11 +50,17 @@ Deployment With PM2, NGINX, SSL
 ## Tech skills practiced
 
 Backend RESTful API   
+
 HTTP Fundamentals (Req/Res Cycle, Status Codes, etc)    
+
 Advanced Mongoose Queries   
+
 JWT/Cookie Authentication   
+
 Express & Mongoose Middleware (Geocoding, Auth, Error Handling, etc)    
+
 API Security (NoSQL injection, XSS protection, Rate Limiting)   
+
 API Documentation & Deployment    
 
 
