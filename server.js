@@ -1,6 +1,6 @@
 const express = require("express");
 const dotenv = require("dotenv");
-const path = require('path')
+const path = require("path");
 
 // Logging
 const morgan = require("morgan");
@@ -9,23 +9,22 @@ const morgan = require("morgan");
 const colors = require("colors");
 
 // Utils
-const fileupload = require("express-fileupload")
-const cookieParser = require('cookie-parser')
+const fileupload = require("express-fileupload");
+const cookieParser = require("cookie-parser");
 
 // Security
-const mongoSanitize = require('express-mongo-sanitize')
-const helmet = require('helmet')
-const xss = require('xss-clean')
-const hpp = require('hpp')
-const rateLimit = require('express-rate-limit')
-const cors = require('cors')
+const mongoSanitize = require("express-mongo-sanitize");
+const helmet = require("helmet");
+const xss = require("xss-clean");
+const hpp = require("hpp");
+const rateLimit = require("express-rate-limit");
+const cors = require("cors");
 
 // Error handling middleware
 const errorHandler = require("./middleware/error");
 
 // MongoDB Connection
 const connectDB = require("./config/db");
-
 
 // Load env vars
 dotenv.config({
@@ -38,9 +37,9 @@ connectDB();
 // Route files
 const bootcampsRouter = require("./routes/bootcamps");
 const coursesRouter = require("./routes/courses");
-const authRouter = require('./routes/auth')
-const usersRouter = require('./routes/users')
-const reviewsRouter = require('./routes/reviews')
+const authRouter = require("./routes/auth");
+const usersRouter = require("./routes/users");
+const reviewsRouter = require("./routes/reviews");
 
 const app = express();
 
@@ -48,7 +47,7 @@ const app = express();
 app.use(express.json());
 
 // Cookie parser
-app.use(cookieParser())
+app.use(cookieParser());
 
 // Dev logging middleware
 if (process.env.NODE_ENV === "development") {
@@ -56,42 +55,42 @@ if (process.env.NODE_ENV === "development") {
 }
 
 // File uploading
-app.use(fileupload())
+app.use(fileupload());
 
 // Sanitize data (to prevent mongodb injection, etc.)
 // e.g. prevent something like { "email":  { "$gte": "" }, "password": "123456" }
-app.use(mongoSanitize())
+app.use(mongoSanitize());
 
-// Set security headers
-app.use(helmet())
+// Set Security headers
+app.use(helmet({ contentSecurityPolicy: false }));
 
 // Prevent XSS attacks
 /* make sure this comes before any routes */
-app.use(xss())
+app.use(xss());
 
 // Rate limiting
 const limiter = rateLimit({
   windowMs: 10 * 60 * 1000, // 10 min
-  max: 100
-})
-app.use(limiter)
+  max: 100,
+});
+app.use(limiter);
 
 // Prevent http param pollution
-app.use(hpp())
+app.use(hpp());
 
 // Enable CORS
-app.use(cors())
+app.use(cors());
 
 // Set static folder
 // __dirname: current dir
-app.use(express.static(path.join(__dirname, 'public')))
+app.use(express.static(path.join(__dirname, "public")));
 
 // Mount routers
 app.use("/api/v1/bootcamps", bootcampsRouter);
 app.use("/api/v1/courses", coursesRouter);
-app.use("/api/v1/auth", authRouter)
-app.use("/api/v1/users", usersRouter)
-app.use('/api/v1/reviews', reviewsRouter)
+app.use("/api/v1/auth", authRouter);
+app.use("/api/v1/users", usersRouter);
+app.use("/api/v1/reviews", reviewsRouter);
 
 // Use errorHandler middleware
 app.use(errorHandler);
