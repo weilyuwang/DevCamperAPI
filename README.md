@@ -123,7 +123,22 @@ An extensive, in-depth, professional deployed backend API for DevCamper, a bootc
 - git push heroku master
 - Add env vars in heroku settings
 
-### Check Live App @https://weilyu-devcamper.herokuapp.com/
+### API endpoints:
+
+- Bootcamps
+  `https://weilyu-devcamper.herokuapp.com/api/v1/bootcamps`
+
+- Courses
+  `https://weilyu-devcamper.herokuapp.com/api/v1/courses`
+
+- Auth
+  `https://weilyu-devcamper.herokuapp.com/api/v1/auth`
+
+- Users
+  `https://weilyu-devcamper.herokuapp.com/api/v1/users`
+
+- Reviews
+  `https://weilyu-devcamper.herokuapp.com/api/v1/reviews`
 
 ## Code Related Suggestions
 
