@@ -104,7 +104,7 @@ An extensive, in-depth, professional deployed backend API for DevCamper, a bootc
 - Use docgen to create HTML files from Postman
 - Add html files as the / route for the api
 
-## Deployment (Digital Ocean)
+## Deployment (Digital Ocean) - No longer paying
 
 - Push to Github
 - Create a droplet
@@ -114,6 +114,16 @@ An extensive, in-depth, professional deployed backend API for DevCamper, a bootc
 - Create an NGINX reverse proxy for port 80
 - Connect a domain name
 - Install an SSL using Let's Encrypt
+
+## Deployment (Heroku)
+
+- heroku login
+- heroku create APP
+- heroku git:remote -a APP_NAME
+- git push heroku master
+- Add env vars in heroku settings
+
+### Check Live App @https://weilyu-devcamper.herokuapp.com/
 
 ## Code Related Suggestions
 
@@ -196,6 +206,12 @@ Rename "config/config.env.env" to "config/config.env" and update the values/sett
 
 ```
 npm install
+```
+
+### Data seeder
+
+```
+node seeder -i
 ```
 
 ### Run App
