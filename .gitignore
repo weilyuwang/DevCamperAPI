@@ -4,3 +4,4 @@ config/config.env
 
 # vscode
 .vscode
+.DS_Store
